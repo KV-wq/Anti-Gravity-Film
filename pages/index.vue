@@ -22,11 +22,11 @@
     <img
       src="../assets/images/test/car-1.svg"
       alt="car"
-      class="absolute max-sm:w-10/12 max-sm:right-5 max-sm:top-[20%] z-10 w-[50vw] sm:left-1/2 sm:-translate-x-[75%] top-1/2 sm:-translate-y-[30%]"
+      class="absolute max-sm:w-10/12 max-sm:right-4 max-sm:top-[18%] max-[370px]:top-[21%] z-10 w-[50vw] sm:left-1/2 sm:-translate-x-[75%] top-1/2 sm:-translate-y-[30%]"
     />
 
     <div
-      class="w-5/12 flex flex-col justify-between pb-[3.5vw] max-sm:pb-[5vw] absolute pl-[4.7vw] pt-[3.5vw] pr-[3vw] max-sm:pr-0 max-sm:pl-[7vw] max-sm:pt-16 right-0 bottom-0 h-screen bg-gradient-to-t from-primary_light to-primary_dark max-sm:w-full max-sm:h-[60%]"
+      class="w-5/12 flex flex-col justify-between pb-[3.5vw] max-sm:pb-[5vw] absolute pl-[4.7vw] pt-[3.5vw] pr-[3vw] max-sm:pr-0 max-sm:pl-[7vw] max-sm:pt-14 right-0 bottom-0 h-screen bg-gradient-to-t from-primary_light to-primary_dark max-sm:w-full max-sm:h-[60%]"
     >
       <div>
         <h1
