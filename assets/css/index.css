@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "Montserrat";
+  src: url("../fonts/Montserrat.ttf");
+}
+@font-face {
+  font-family: "NoLimits";
+  src: url("../fonts/NoLimits.ttf");
+}
+@font-face {
+  font-family: "Manrope";
+  src: url("../fonts/Manrope.ttf");
+}
+
+body {
+  @apply font-montserrat w-screen h-screen max-h-screen overflow-hidden bg-black text-white selection:bg-secondary;
+}
