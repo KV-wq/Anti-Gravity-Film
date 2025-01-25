@@ -1,6 +1,9 @@
 <script setup lang="ts">
 onMounted(() => {
   window.scrollTo(0, 0);
+  setTimeout(() => {
+    window.dispatchEvent(new Event("resize"));
+  }, 100);
 });
 </script>
 
