@@ -26,7 +26,7 @@
     />
 
     <div
-      class="w-5/12 flex flex-col justify-between pb-[3.5vw] max-sm:pb-[5vw] absolute pl-[4.7vw] pt-[3.5vw] pr-[3vw] max-sm:pr-0 max-sm:pl-[7vw] max-sm:pt-[17vw] right-0 bottom-0 h-screen bg-gradient-to-t from-primary_light to-primary_dark max-sm:w-full max-sm:h-[60%]"
+      class="w-5/12 flex flex-col justify-between pb-[3.5vw] max-sm:pb-[5vw] absolute pl-[4.7vw] pt-[3.5vw] pr-[3vw] max-sm:pr-0 max-sm:pl-[7vw] max-sm:pt-16 right-0 bottom-0 h-screen bg-gradient-to-t from-primary_light to-primary_dark max-sm:w-full max-sm:h-[60%]"
     >
       <div>
         <h1
@@ -45,7 +45,7 @@
       </div>
       <div>
         <div
-          class="flex justify-start gap-[2vw] max-sm:gap-[4vw] mb-[3vw] max-sm:mb-4"
+          class="flex justify-start gap-[2vw] max-sm:gap-[4vw] mb-[3vw] max-sm:mb-4 mt-2"
         >
           <Button
             outline
