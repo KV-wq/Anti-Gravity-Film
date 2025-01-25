@@ -1,15 +1,4 @@
-<script setup lang="ts">
-onMounted(() => {
-  window.scrollTo(0, 0);
-  const element = document.body;
-  setTimeout(() => {
-    if (element) {
-      void element.offsetHeight;
-      window.dispatchEvent(new Event("resize"));
-    }
-  }, 100);
-});
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div>
