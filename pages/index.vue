@@ -4,25 +4,25 @@
   <div>
     <Button
       is-vertical
-      class="absolute left-0 top-1/2 max-sm:top-[20%] -translate-y-[50%] -translate-x-[35%] !w-[17vw] max-sm:!w-[40vw] max-sm:h-[12vw] h-[5.5vw] !text-[1.3vw] max-sm:!text-[3.7vw]"
+      class="absolute left-0 top-1/2 max-sm:top-[24%] -translate-y-[50%] -translate-x-[35%] !w-[17vw] max-sm:!w-44 max-sm:h-14 h-[5.5vw] !text-[1.3vw] max-sm:!text-lg"
       >выбрать цвет</Button
     >
 
     <h2
-      class="absolute font-nolimits max-sm:text-[13vw] max-sm:left-5 sm:top-10 text-[5vw] left-[20vw]"
+      class="absolute font-nolimits max-sm:text-5xl max-sm:left-5 sm:top-10 max-sm:top-3 text-[5vw] left-[20vw]"
     >
       логотип
     </h2>
     <img
       src="../assets/images/icons/burger.svg"
       alt="menu"
-      class="absolute top-20 sm:left-20 w-[4vw] max-sm:right-5 max-sm:top-7 max-sm:w-12"
+      class="absolute top-20 sm:left-20 w-[4vw] max-sm:right-6 max-sm:top-7 max-sm:w-11 max-[350px]:w-8"
     />
 
     <img
       src="../assets/images/test/car-1.svg"
       alt="car"
-      class="absolute max-sm:w-10/12 max-sm:right-5 max-sm:top-[23vh] z-10 w-[50vw] sm:left-1/2 sm:-translate-x-[75%] top-1/2 sm:-translate-y-[30%]"
+      class="absolute max-sm:w-10/12 max-sm:right-5 max-sm:top-[20%] z-10 w-[50vw] sm:left-1/2 sm:-translate-x-[75%] top-1/2 sm:-translate-y-[30%]"
     />
 
     <div
@@ -36,7 +36,7 @@
           пленка
         </h1>
         <p
-          class="text-[1.20vw] max-sm:text-[3.7vw] font-normal max-w-[84%] mt-[2vw] max-sm:mt-[6vw] max-sm:max-w-[94%]"
+          class="text-[1.20vw] max-sm:text-[3.7vw] font-normal max-w-[84%] mt-[2vw] max-sm:mt-4 max-sm:max-w-[94%]"
         >
           Это тестовый контент, который не должен нести никакого смысла, лишь
           показать текст Тестовый контент, который не должен нести никакого
@@ -45,7 +45,7 @@
       </div>
       <div>
         <div
-          class="flex justify-start gap-[2vw] max-sm:gap-[4vw] mb-[3vw] max-sm:mb-[8vw]"
+          class="flex justify-start gap-[2vw] max-sm:gap-[4vw] mb-[3vw] max-sm:mb-4"
         >
           <Button
             outline
@@ -58,8 +58,9 @@
             class="h-[4vw] max-sm:h-[15vw] cursor-pointer"
           />
         </div>
+
         <div
-          class="flex justify-start gap-[2.5vw] max-sm:gap-[8vw] text-[1.15vw] max-sm:text-[4.2vw] underline font-semibold mb-[4vw] max-sm:mb-[17vw]"
+          class="flex justify-start gap-[2.5vw] max-sm:gap-[8vw] text-[1.15vw] max-sm:text-[4.2vw] underline font-semibold mb-[4vw] max-sm:mb-7"
         >
           <p>Наши контакты</p>
           <p>Товарная линейка</p>
