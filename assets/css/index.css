@@ -12,5 +12,5 @@
 }
 
 body {
-  @apply font-montserrat w-screen overflow-hidden bg-black text-white selection:bg-secondary;
+  @apply font-montserrat w-screen h-screen overflow-hidden bg-black text-white selection:bg-secondary;
 }

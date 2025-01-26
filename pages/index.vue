@@ -2,10 +2,12 @@
 
 <template>
   <div>
-    <Button
-      is-vertical
-      class="absolute left-0 top-1/2 max-sm:top-[24%] -translate-y-[50%] -translate-x-[35%] !w-[17vw] max-sm:!w-44 max-sm:h-14 h-[5.5vw] !text-[1.3vw] max-sm:!text-lg"
-      >выбрать цвет</Button
+    <NuxtLink href="/choose-color">
+      <Button
+        is-vertical
+        class="absolute left-0 top-1/2 max-sm:top-[24%] -translate-y-[50%] -translate-x-[35%] !w-[17vw] max-sm:!w-44 max-sm:h-14 h-[5.5vw] !text-[1.3vw] max-sm:!text-lg"
+        >выбрать цвет</Button
+      ></NuxtLink
     >
 
     <h2
@@ -16,13 +18,13 @@
     <img
       src="../assets/images/icons/burger.svg"
       alt="menu"
-      class="absolute top-20 sm:left-20 w-[4vw] max-sm:right-6 max-sm:top-7 max-sm:w-11 max-[350px]:w-8"
+      class="absolute top-20 sm:left-20 w-[4vw] max-sm:right-6 max-sm:top-7 max-sm:w-11 max-[350px]:w-8 max-lg:top-[3.75rem]"
     />
 
     <img
       src="../assets/images/test/car-1.svg"
       alt="car"
-      class="absolute max-sm:w-10/12 max-sm:right-4 max-sm:top-[18%] max-[370px]:top-[21%] z-10 w-[50vw] sm:left-1/2 sm:-translate-x-[75%] top-1/2 sm:-translate-y-[30%]"
+      class="absolute max-sm:w-10/12 max-sm:right-4 max-[500px]:top-[18%] max-sm:top-[12%] max-[370px]:top-[21%] z-10 w-[50vw] sm:left-1/2 sm:-translate-x-[75%] top-1/2 sm:-translate-y-[30%] max-md:w-7/12"
     />
 
     <div
