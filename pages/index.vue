@@ -11,14 +11,14 @@
     >
 
     <h2
-      class="absolute font-nolimits max-sm:text-5xl max-sm:left-5 sm:top-10 max-sm:top-3 text-[5vw] left-[20vw]"
+      class="absolute font-nolimits max-sm:text-5xl max-sm:left-5 sm:top-10 max-sm:top-[5.5px] text-[5vw] left-[20vw]"
     >
       логотип
     </h2>
     <img
       src="../assets/images/icons/burger.svg"
       alt="menu"
-      class="absolute top-20 sm:left-20 w-[4vw] max-sm:right-6 max-sm:top-7 max-sm:w-11 max-[350px]:w-8 max-lg:top-[3.75rem]"
+      class="absolute top-20 sm:left-20 w-[4vw] max-sm:right-5 max-sm:top-5 max-sm:w-11 max-[350px]:w-8 max-lg:top-[3.75rem]"
     />
 
     <img
@@ -62,7 +62,7 @@
         </div>
 
         <div
-          class="flex justify-start gap-[2.5vw] max-sm:gap-[8vw] text-[1.15vw] max-sm:text-[4.2vw] underline font-semibold mb-[4vw] max-sm:mb-7"
+          class="flex justify-start gap-[2.5vw] max-sm:gap-[8vw] text-[1.15vw] max-sm:text-[4.2vw] underline font-semibold mb-[4vw] max-sm:mb-5"
         >
           <p>Наши контакты</p>
           <p>Товарная линейка</p>
