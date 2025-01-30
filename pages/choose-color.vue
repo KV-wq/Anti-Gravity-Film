@@ -10,7 +10,7 @@
         <ChoiseColor class="w-full h-full" />
       </div>
       <div
-        class="h-full flex items-end justify-center sm:w-[70vw] sm:pb-[5vw] max-sm:pb-3"
+        class="h-full flex items-end justify-center sm:w-[70vw] sm:pb-[5vw] max-sm:pb-3 max-sm:mr-1"
       >
         <CarStand />
       </div>

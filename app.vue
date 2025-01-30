@@ -2,5 +2,6 @@
   <div>
     <NuxtPage />
     <NuxtRouteAnnouncer />
+    <ModalWrapper />
   </div>
 </template>

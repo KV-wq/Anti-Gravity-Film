@@ -1,9 +1,11 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="relative size-[39vw] max-sm:size-60 ml-[10vw]">
+  <div
+    class="relative size-[39vw] max-sm:size-60 ml-[10vw] max-[380px]:scale-95"
+  >
     <img
-      src="../assets/images/test/car-2.svg"
+      src="/images/car-2.svg"
       alt="Car"
       class="absolute top-[10vw] -left-[7.5vw] w-[40vw] max-sm:w-[240px] max-sm:top-[18vw] max-sm:-left-14"
     />
@@ -25,54 +27,9 @@
       />
     </div>
     <div
-      class="absolute inset-0 bg-[url('/circle.svg')] bg-center bg-contain bg-no-repeat"
+      class="absolute inset-0 bg-[url('/images/circle.svg')] bg-center bg-contain bg-no-repeat"
     ></div>
-    <div
-      class="size-[5.5vw] rounded-full bg-white border-2 absolute pt-[1vw] max-sm:pt-2 right-[11vw] top-[2.7vw] max-sm:size-16 max-sm:right-16 max-sm:-top-2"
-    >
-      <img
-        src="../assets/images/test/car-3.svg"
-        alt="selected_car"
-        class="size-[5.2vw] max-sm:size-16"
-      />
-    </div>
-    <p
-      class="text-[1.2vw] absolute -right-[2.3vw] top-[3.5vw] max-sm:right-2 max-sm:text-[9px] max-sm:top-0"
-    >
-      TPU-014S <br />Beetroot <br class="sm:hidden" />
-      Purple (SS)
-    </p>
 
-    <div
-      class="size-[5.5vw] rounded-full bg-white border-2 border-secondary max-sm:pt-2 absolute pt-[0.8vw] right-[3vw] top-[17vw] max-sm:size-16 max-sm:right-2 max-sm:top-[85px]"
-    >
-      <img
-        src="../assets/images/test/car-2.svg"
-        alt="selected_car"
-        class="size-[5.2vw] max-sm:size-16"
-      />
-    </div>
-    <p
-      class="text-[1.2vw] absolute -right-[12vw] top-[18vw] max-sm:-right-[55px] max-sm:text-[9px] max-sm:top-[92px]"
-    >
-      TPU-001S <br />
-      Glossy Swan <br class="sm:hidden" />
-      White (SS)
-    </p>
-    <div
-      class="size-[5.5vw] max-sm:size-16 rounded-full bg-white border-2 absolute pt-[1vw] max-sm:pt-2 right-[11vw] bottom-[2.5vw] max-sm:right-16 max-sm:bottom-0"
-    >
-      <img
-        src="../assets/images/test/car-4.svg"
-        alt="selected_car"
-        class="size-[5.2vw] max-sm:size-16"
-      />
-    </div>
-    <p
-      class="text-[1.2vw] absolute right-[4vw] bottom-[3.4vw] max-sm:right-3.5 max-sm:text-[9px] max-sm:bottom-4"
-    >
-      PU-015S <br />
-      Lake Blue
-    </p>
+    <CarSelector />
   </div>
 </template>

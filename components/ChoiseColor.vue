@@ -1,4 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const colors = [
+  { id: "red", value: "bg-red-500" },
+  { id: "orange", value: "bg-orange-500" },
+  { id: "yellow", value: "bg-yellow-500" },
+  { id: "green", value: "bg-green-500" },
+  { id: "blue", value: "bg-blue-500" },
+  { id: "purple", value: "bg-purple-500" },
+  { id: "purple-dark", value: "bg-purple-900" },
+];
+
+const selectedColor = ref("bg-red-500");
+</script>
 
 <template>
   <div class="flex flex-col justify-end gap-[1.2vw] max-sm:gap-4">
@@ -22,13 +34,28 @@
     </select>
 
     <div class="grid grid-cols-5 w-full gap-4 max-sm:w-10/12">
-      <div class="rounded-full bg-red-500 size-[2.7vw] max-sm:size-10"></div>
-      <div class="rounded-full bg-orange-500 size-[2.7vw] max-sm:size-10"></div>
-      <div class="rounded-full bg-yellow-500 size-[2.7vw] max-sm:size-10"></div>
-      <div class="rounded-full bg-green-500 size-[2.7vw] max-sm:size-10"></div>
-      <div class="rounded-full bg-blue-500 size-[2.7vw] max-sm:size-10"></div>
-      <div class="rounded-full bg-purple-500 size-[2.7vw] max-sm:size-10"></div>
-      <div class="rounded-full bg-purple-900 size-[2.7vw] max-sm:size-10"></div>
+      <label
+        v-for="color in colors"
+        :key="color.id"
+        class="relative cursor-pointer"
+      >
+        <input
+          type="radio"
+          :value="color.value"
+          v-model="selectedColor"
+          :name="color.id"
+          class="sr-only"
+        />
+        <div
+          class="rounded-full size-[2.7vw] max-sm:size-10 transition-all duration-200"
+          :class="[
+            color.value,
+            selectedColor === color.value
+              ? 'ring-2 ring-secondary ring-offset-2 ring-offset-black'
+              : '',
+          ]"
+        ></div>
+      </label>
     </div>
 
     <Button

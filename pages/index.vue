@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useModalStore } from "~/store/modalStore";
+</script>
 
 <template>
   <div>
@@ -49,23 +51,28 @@
         <div
           class="flex justify-start gap-[2vw] max-sm:gap-[4vw] mb-[3vw] max-sm:mb-4 mt-3"
         >
-          <Button
-            outline
-            class="w-[15vw] max-sm:w-[45vw] max-sm:h-[15vw] max-sm:!text-[4vw] h-[4vw] !text-[1.2vw]"
-            >подробнее</Button
+          <NuxtLink href="/video-review"
+            ><Button
+              outline
+              class="w-[15vw] max-sm:w-[45vw] max-sm:h-[15vw] max-sm:!text-[4vw] h-[4vw] !text-[1.2vw]"
+              >подробнее</Button
+            ></NuxtLink
           >
-          <img
-            src="../assets/images/icons/play.svg"
-            alt="play"
-            class="h-[4vw] max-sm:h-[15vw] cursor-pointer"
-          />
+          <NuxtLink href="/video">
+            <img
+              src="../assets/images/icons/play.svg"
+              alt="play"
+              class="h-[4vw] max-sm:h-[15vw] cursor-pointer"
+          /></NuxtLink>
         </div>
 
         <div
           class="flex justify-start gap-[2.5vw] max-sm:gap-[8vw] text-[1.15vw] max-sm:text-[4.2vw] underline font-semibold mb-[4vw] max-sm:mb-5"
         >
-          <p>Наши контакты</p>
-          <p>Товарная линейка</p>
+          <p class="cursor-pointer" @click="useModalStore().showContacts()">
+            Наши контакты
+          </p>
+          <NuxtLink href="products">Товарная линейка</NuxtLink>
         </div>
 
         <div class="flex items-center justify-between mr-[1vw] max-sm:mr-[8vw]">

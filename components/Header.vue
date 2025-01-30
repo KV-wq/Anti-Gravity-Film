@@ -1,4 +1,21 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useModalStore } from "~/store/modalStore";
+
+const route = useRoute();
+
+const currentPageTitle = computed(() => {
+  switch (route.path) {
+    case "/choose-color":
+      return "Подобрать цвет";
+    case "/products":
+      return "Товарная линейка";
+    case "/video-review":
+      return "Видеообзор";
+    default:
+      return "";
+  }
+});
+</script>
 
 <template>
   <header class="relative mx-[5vw] mt-[3vw] max-sm:mt-5">
@@ -13,6 +30,7 @@
       логотип
     </h2>
     <Button
+      @click="useModalStore().showContacts()"
       class="w-[15vw] h-[3.5vw] !text-[1.1vw] absolute right-0 max-sm:hidden"
       >контакты</Button
     >
@@ -21,7 +39,7 @@
     >
       <span class="underline text-secondary"
         ><NuxtLink href="/">Главная</NuxtLink></span
-      >&nbsp; / &nbsp;Подобрать цвет
+      >&nbsp; / &nbsp;{{ currentPageTitle }}
     </p>
   </header>
 </template>
