@@ -1,6 +1,5 @@
-// components/CarSelector.vue
 <script setup lang="ts">
-import { ref } from "vue";
+import { useCarStore } from "~/store/carStore";
 
 const cars = [
   {
@@ -38,12 +37,20 @@ const cars = [
   },
 ];
 
+const carStore = useCarStore();
 const selectedCar = ref(2);
+
+const handleColorSelect = (carId: number) => {
+  const selectedCar = cars.find((car) => car.id === carId);
+  if (selectedCar) {
+    carStore.setSelectedCar(selectedCar);
+  }
+};
 </script>
 
 <template>
   <div>
-    <div v-for="car in cars" :key="car.id">
+    <div v-for="car in cars" :key="car.id" @click="handleColorSelect(car.id)">
       <div
         class="size-[5.5vw] rounded-full bg-white border-2 absolute pt-[1vw] max-sm:pt-2 max-sm:size-16"
         :class="[

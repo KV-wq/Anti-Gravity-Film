@@ -18,7 +18,7 @@ const currentPageTitle = computed(() => {
 </script>
 
 <template>
-  <header class="relative mx-[5vw] mt-[3vw] max-sm:mt-5">
+  <header class="relative mx-[5vw] mt-[3vw] max-sm:mt-5 z-10">
     <img
       src="../assets/images/icons/burger.svg"
       alt="menu"

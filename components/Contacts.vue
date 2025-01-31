@@ -76,7 +76,6 @@ import { useModalStore } from "~/store/modalStore";
         >обратный звонок</Button
       >
     </div>
-
     <Map />
   </div>
 </template>

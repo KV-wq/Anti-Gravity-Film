@@ -99,7 +99,7 @@ const swiperOptions = {
 </script>
 
 <template>
-  <div class="flex flex-col justify-end gap-[1.2vw] max-sm:gap-2">
+  <div class="flex flex-col justify-end gap-[1.2vw] max-sm:gap-3">
     <h1
       class="text-[2.75vw] leading-[3.2vw] font-bold uppercase max-sm:text-2xl"
     >
@@ -127,7 +127,7 @@ const swiperOptions = {
         class="swiper-button-next !text-secondary absolute -right-6 top-1/2 translate-y-[25%] z-10 !w-8 !h-8"
       />
 
-      <Swiper v-bind="swiperOptions" class="w-full max-sm:!pl-4 !py-1">
+      <Swiper v-bind="swiperOptions" class="w-full max-sm:!pl-4 sm:!pl-1 !py-1">
         <SwiperSlide v-for="(group, index) in colorGroups" :key="index">
           <div class="grid grid-cols-5 w-full gap-4 max-sm:w-10/12">
             <label
@@ -183,11 +183,11 @@ const swiperOptions = {
   }
 
   :deep(.swiper-button-prev) {
-    left: -27px;
+    left: -22px;
   }
 
   :deep(.swiper-button-next) {
-    right: -27px;
+    right: -22px;
   }
 }
 @media (min-width: 640px) {
