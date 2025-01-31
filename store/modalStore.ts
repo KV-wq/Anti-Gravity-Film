@@ -1,15 +1,15 @@
-// stores/modalStore.ts
 import { defineStore } from "pinia";
 import { ref, computed } from "vue";
 
 export const useModalStore = defineStore("modal", () => {
   const isFormVisible = ref(false);
   const isContactsVisible = ref(false);
+  const isVideoVisible = ref(false);
   const selectedFilm = ref("");
 
   // Вычисляемое свойство для подложки
   const isOverlayVisible = computed(
-    () => isFormVisible.value || isContactsVisible.value
+    () => isFormVisible.value || isContactsVisible.value || isVideoVisible.value
   );
 
   // Открытие/закрытие формы
@@ -34,16 +34,26 @@ export const useModalStore = defineStore("modal", () => {
   const closeAll = () => {
     isFormVisible.value = false;
     isContactsVisible.value = false;
+    isVideoVisible.value = false;
   };
 
   const setSelectedFilm = (film: string) => {
     selectedFilm.value = film;
   };
 
+  const showVideo = () => {
+    isVideoVisible.value = true;
+  };
+
+  const hideVideo = () => {
+    isVideoVisible.value = false;
+  };
+
   return {
     isFormVisible,
     isContactsVisible,
     isOverlayVisible,
+    isVideoVisible,
     selectedFilm,
     showForm,
     hideForm,
@@ -51,5 +61,7 @@ export const useModalStore = defineStore("modal", () => {
     hideContacts,
     closeAll,
     setSelectedFilm,
+    showVideo,
+    hideVideo,
   };
 });

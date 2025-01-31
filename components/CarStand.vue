@@ -2,7 +2,7 @@
 
 <template>
   <div
-    class="relative size-[39vw] max-sm:size-60 ml-[10vw] max-[380px]:scale-95"
+    class="relative size-[39vw] max-sm:size-60 ml-[10vw] max-[380px]:scale-90"
   >
     <img
       src="/images/car-2.svg"

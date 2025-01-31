@@ -26,7 +26,7 @@ import { useModalStore } from "~/store/modalStore";
     <img
       src="../assets/images/test/car-1.svg"
       alt="car"
-      class="absolute max-sm:w-10/12 max-sm:right-4 max-[500px]:top-[18%] max-sm:top-[12%] max-[370px]:top-[21%] z-10 w-[50vw] sm:left-1/2 sm:-translate-x-[75%] top-1/2 sm:-translate-y-[30%] max-md:w-7/12"
+      class="absolute max-sm:w-10/12 max-sm:right-4 max-[500px]:top-[18%] max-sm:top-[12%] max-[370px]:top-[21%] z-10 w-[48vw] sm:left-1/2 sm:-translate-x-[75%] top-1/2 sm:-translate-y-[30%] max-md:w-7/12"
     />
 
     <div
@@ -58,12 +58,13 @@ import { useModalStore } from "~/store/modalStore";
               >подробнее</Button
             ></NuxtLink
           >
-          <NuxtLink href="/video">
-            <img
-              src="../assets/images/icons/play.svg"
-              alt="play"
-              class="h-[4vw] max-sm:h-[15vw] cursor-pointer"
-          /></NuxtLink>
+
+          <img
+            src="../assets/images/icons/play.svg"
+            alt="play"
+            class="h-[4vw] max-sm:h-[15vw] cursor-pointer"
+            @click="useModalStore().showVideo()"
+          />
         </div>
 
         <div

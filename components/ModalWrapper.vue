@@ -20,6 +20,10 @@ const store = useModalStore();
   <Transition name="slide">
     <Contacts v-if="store.isContactsVisible" />
   </Transition>
+
+  <Transition name="fade">
+    <VideoModal v-if="store.isVideoVisible" />
+  </Transition>
 </template>
 
 <style scoped>
