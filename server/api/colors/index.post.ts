@@ -1,4 +1,3 @@
-// server/api/colors/index.post.ts
 import { writeFileSync } from "fs";
 import { resolve } from "path";
 
