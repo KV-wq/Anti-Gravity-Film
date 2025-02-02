@@ -10,7 +10,7 @@ export default defineNuxtPlugin(() => {
   let transitionDirection = "next";
   let isModalOpen = false;
 
-  const routes = ["/choose-color", "/", "/products", "/video-review", "/video"];
+  const routes = ["/", "/choose-color", "/products", "/video-review", "/video"];
 
   const getNextRoute = (direction: "next" | "prev") => {
     const currentIndex = routes.indexOf(router.currentRoute.value.path);
@@ -24,12 +24,12 @@ export default defineNuxtPlugin(() => {
       } else {
         isModalOpen = false;
         useModalStore().hideContacts();
-        return "/products";
+        return "/choose-color";
       }
     }
 
     if (
-      router.currentRoute.value.path === "/products" &&
+      router.currentRoute.value.path === "/choose-color" &&
       direction === "prev"
     ) {
       if (isModalOpen) {
