@@ -1,6 +1,82 @@
 import { gsap } from "gsap";
 
 export default defineNuxtPlugin(() => {
+  const router = useRouter();
+  let isAnimating = false;
+  let touchStartY = 0;
+  let touchStartX = 0;
+  let wheelTimeout: NodeJS.Timeout;
+
+  // Функция для определения следующей страницы
+  const getNextRoute = (direction: "next" | "prev") => {
+    const routes = ["/choose-color", "/", "/products", "/video-review"]; // Добавьте все ваши роуты в нужном порядке
+    const currentIndex = routes.indexOf(router.currentRoute.value.path);
+
+    if (direction === "next" && currentIndex < routes.length - 1) {
+      return routes[currentIndex + 1];
+    } else if (direction === "prev" && currentIndex > 0) {
+      return routes[currentIndex - 1];
+    }
+    return null;
+  };
+
+  // Обработчик колесика мыши
+  const handleWheel = (e: WheelEvent) => {
+    e.preventDefault();
+
+    clearTimeout(wheelTimeout);
+    wheelTimeout = setTimeout(() => {
+      if (isAnimating) return;
+
+      const direction = e.deltaY > 0 ? "next" : "prev";
+      const nextRoute = getNextRoute(direction);
+
+      if (nextRoute) {
+        isAnimating = true;
+        router.push(nextRoute);
+        setTimeout(() => {
+          isAnimating = false;
+        }, 1000);
+      }
+    }, 50);
+  };
+
+  // Обработчики тач-событий
+  const handleTouchStart = (e: TouchEvent) => {
+    touchStartY = e.touches[0].clientY;
+    touchStartX = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: TouchEvent) => {
+    if (isAnimating) return;
+
+    const touchEndY = e.changedTouches[0].clientY;
+    const touchEndX = e.changedTouches[0].clientX;
+
+    const deltaY = touchStartY - touchEndY;
+    const deltaX = touchStartX - touchEndX;
+
+    if (Math.abs(deltaY) > 50 && Math.abs(deltaY) > Math.abs(deltaX)) {
+      const direction = deltaY > 0 ? "next" : "prev";
+      const nextRoute = getNextRoute(direction);
+
+      if (nextRoute) {
+        isAnimating = true;
+        router.push(nextRoute);
+        setTimeout(() => {
+          isAnimating = false;
+        }, 1000);
+      }
+    }
+  };
+
+  // Добавляем обработчики при монтировании
+  if (process.client) {
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd, { passive: true });
+  }
+
   const pageTransition = {
     name: "page-transition",
     mode: "",
@@ -38,10 +114,7 @@ export default defineNuxtPlugin(() => {
           x: "100%",
           zIndex: 1,
         });
-      }
-
-      // Для остальных случаев
-      else {
+      } else {
         gsap.set(el, {
           position: "fixed",
           left: 0,
@@ -79,14 +152,12 @@ export default defineNuxtPlugin(() => {
 
         gsap.to(el, {
           opacity: 0,
-          x: "100%", // текущий экран уезжает вправо
+          x: "100%",
           duration: 0.6,
           ease: "power2.inOut",
           onComplete: done,
         });
-      }
-      // Для переходов с главной страницы
-      else if (route.path === "/") {
+      } else if (route.path === "/") {
         gsap.set(el, {
           position: "fixed",
           left: 0,
@@ -102,9 +173,7 @@ export default defineNuxtPlugin(() => {
           ease: "power2.inOut",
           onComplete: done,
         });
-      }
-      // Для choose-color используем старую логику
-      else if (route.path === "/choose-color") {
+      } else if (route.path === "/choose-color") {
         const isForward = toPath == "/";
         gsap.set(el, {
           position: "fixed",
@@ -121,9 +190,7 @@ export default defineNuxtPlugin(() => {
           ease: "power2.inOut",
           onComplete: done,
         });
-      }
-      // Для остальных случаев
-      else {
+      } else {
         gsap.set(el, {
           position: "fixed",
           left: 0,
