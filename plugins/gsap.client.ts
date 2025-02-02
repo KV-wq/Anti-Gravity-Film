@@ -1,4 +1,5 @@
 import { gsap } from "gsap";
+import { useModalStore } from "~/store/modalStore";
 
 export default defineNuxtPlugin(() => {
   const router = useRouter();
@@ -6,11 +7,40 @@ export default defineNuxtPlugin(() => {
   let touchStartY = 0;
   let touchStartX = 0;
   let wheelTimeout: NodeJS.Timeout;
+  let transitionDirection = "next";
+  let isModalOpen = false;
 
-  // Функция для определения следующей страницы
+  const routes = ["/choose-color", "/", "/products", "/video-review", "/video"];
+
   const getNextRoute = (direction: "next" | "prev") => {
-    const routes = ["/choose-color", "/", "/products", "/video-review"]; // Добавьте все ваши роуты в нужном порядке
     const currentIndex = routes.indexOf(router.currentRoute.value.path);
+    transitionDirection = direction;
+
+    if (router.currentRoute.value.path === "/" && direction === "next") {
+      if (!isModalOpen) {
+        isModalOpen = true;
+        useModalStore().showContacts();
+        return null;
+      } else {
+        isModalOpen = false;
+        useModalStore().hideContacts();
+        return "/products";
+      }
+    }
+
+    if (
+      router.currentRoute.value.path === "/products" &&
+      direction === "prev"
+    ) {
+      if (isModalOpen) {
+        isModalOpen = false;
+        useModalStore().hideContacts();
+        return "/";
+      }
+      isModalOpen = true;
+      useModalStore().showContacts();
+      return null;
+    }
 
     if (direction === "next" && currentIndex < routes.length - 1) {
       return routes[currentIndex + 1];
@@ -20,7 +50,6 @@ export default defineNuxtPlugin(() => {
     return null;
   };
 
-  // Обработчик колесика мыши
   const handleWheel = (e: WheelEvent) => {
     e.preventDefault();
 
@@ -37,11 +66,14 @@ export default defineNuxtPlugin(() => {
         setTimeout(() => {
           isAnimating = false;
         }, 1000);
+      } else {
+        setTimeout(() => {
+          isAnimating = false;
+        }, 1000);
       }
     }, 50);
   };
 
-  // Обработчики тач-событий
   const handleTouchStart = (e: TouchEvent) => {
     touchStartY = e.touches[0].clientY;
     touchStartX = e.touches[0].clientX;
@@ -66,11 +98,14 @@ export default defineNuxtPlugin(() => {
         setTimeout(() => {
           isAnimating = false;
         }, 1000);
+      } else {
+        setTimeout(() => {
+          isAnimating = false;
+        }, 1000);
       }
     }
   };
 
-  // Добавляем обработчики при монтировании
   if (process.client) {
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
@@ -81,50 +116,17 @@ export default defineNuxtPlugin(() => {
     name: "page-transition",
     mode: "",
     onEnter: (el: Element, done: () => void) => {
-      const route = useRoute();
-      const fromPath = useRouter().options.history.state.back;
+      const initialX = transitionDirection === "next" ? "100%" : "-100%";
 
-      if (route.path === "/choose-color") {
-        gsap.set(el, {
-          position: "fixed",
-          left: 0,
-          top: 0,
-          width: "100%",
-          opacity: 0,
-          x: "100%",
-          zIndex: 1,
-        });
-      } else if (useRouter().options.history.state.current == "/choose-color") {
-        gsap.set(el, {
-          position: "fixed",
-          left: 0,
-          top: 0,
-          width: "100%",
-          opacity: 0,
-          x: "-100%",
-          zIndex: 1,
-        });
-      } else if (fromPath === "/") {
-        gsap.set(el, {
-          position: "fixed",
-          left: 0,
-          top: 0,
-          width: "100%",
-          opacity: 0,
-          x: "100%",
-          zIndex: 1,
-        });
-      } else {
-        gsap.set(el, {
-          position: "fixed",
-          left: 0,
-          top: 0,
-          width: "100%",
-          opacity: 0,
-          x: "-100%",
-          zIndex: 1,
-        });
-      }
+      gsap.set(el, {
+        position: "fixed",
+        left: 0,
+        top: 0,
+        width: "100%",
+        opacity: 0,
+        x: initialX,
+        zIndex: 1,
+      });
 
       gsap.to(el, {
         opacity: 1,
@@ -138,75 +140,23 @@ export default defineNuxtPlugin(() => {
       });
     },
     onLeave: (el: Element, done: () => void) => {
-      const route = useRoute();
-      const toPath = useRouter().options.history.state.current;
+      const exitX = transitionDirection === "next" ? "-100%" : "100%";
 
-      if (toPath === "/choose-color") {
-        gsap.set(el, {
-          position: "fixed",
-          left: 0,
-          top: 0,
-          width: "100%",
-          zIndex: 0,
-        });
+      gsap.set(el, {
+        position: "fixed",
+        left: 0,
+        top: 0,
+        width: "100%",
+        zIndex: 0,
+      });
 
-        gsap.to(el, {
-          opacity: 0,
-          x: "100%",
-          duration: 0.6,
-          ease: "power2.inOut",
-          onComplete: done,
-        });
-      } else if (route.path === "/") {
-        gsap.set(el, {
-          position: "fixed",
-          left: 0,
-          top: 0,
-          width: "100%",
-          zIndex: 0,
-        });
-
-        gsap.to(el, {
-          opacity: 0,
-          x: "-100%",
-          duration: 0.6,
-          ease: "power2.inOut",
-          onComplete: done,
-        });
-      } else if (route.path === "/choose-color") {
-        const isForward = toPath == "/";
-        gsap.set(el, {
-          position: "fixed",
-          left: 0,
-          top: 0,
-          width: "100%",
-          zIndex: 0,
-        });
-
-        gsap.to(el, {
-          opacity: 0,
-          x: isForward ? "-100%" : "100%",
-          duration: 0.6,
-          ease: "power2.inOut",
-          onComplete: done,
-        });
-      } else {
-        gsap.set(el, {
-          position: "fixed",
-          left: 0,
-          top: 0,
-          width: "100%",
-          zIndex: 0,
-        });
-
-        gsap.to(el, {
-          opacity: 0,
-          x: "100%",
-          duration: 0.6,
-          ease: "power2.inOut",
-          onComplete: done,
-        });
-      }
+      gsap.to(el, {
+        opacity: 0,
+        x: exitX,
+        duration: 0.6,
+        ease: "power2.inOut",
+        onComplete: done,
+      });
     },
   };
 
