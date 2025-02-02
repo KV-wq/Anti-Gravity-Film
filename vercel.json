@@ -4,14 +4,15 @@
   "outputDirectory": ".output",
   "public": true,
   "functions": {
-    "api/**": {
-      "memory": 1024
+    "server/api/**": {
+      "memory": 1024,
+      "maxDuration": 10
     }
   },
   "rewrites": [
     {
-      "source": "/server/data/:path*",
-      "destination": "/server/data/:path*"
+      "source": "/server/data/:file*",
+      "destination": "/server/data/:file*"
     }
   ]
 }
