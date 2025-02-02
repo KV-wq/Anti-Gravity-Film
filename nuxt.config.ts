@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      adminPassword: "",
+      adminPassword: "DFm32r28",
     },
   },
 });
