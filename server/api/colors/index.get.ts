@@ -1,8 +1,8 @@
 import { readFileSync } from "fs";
 import { resolve } from "path";
 
-export default defineEventHandler(() => {
-  const path = resolve("./server/data/colors.json");
-  const data = readFileSync(path, "utf-8");
-  return JSON.parse(data);
+export default defineEventHandler(async () => {
+  const storage = useStorage();
+  const data = await storage.getItem("data:colors.json");
+  return data;
 });
