@@ -3,10 +3,10 @@
   "buildCommand": "npm run build",
   "outputDirectory": ".output",
   "public": true,
-  "rewrites": [
+  "routes": [
     {
-      "source": "/server/data/:file",
-      "destination": "/server/data/:file"
+      "src": "/server/data/(?<file>[^/]+)",
+      "dest": "/server/data/$file"
     }
   ]
 }
