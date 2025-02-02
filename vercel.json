@@ -1,9 +1,17 @@
 {
   "version": 2,
-  "routes": [
+  "buildCommand": "npm run build",
+  "outputDirectory": ".output",
+  "public": true,
+  "functions": {
+    "api/**": {
+      "memory": 1024
+    }
+  },
+  "rewrites": [
     {
-      "src": "/server/data/(.*)",
-      "dest": "/server/data/$1"
+      "source": "/server/data/:path*",
+      "destination": "/server/data/:path*"
     }
   ]
 }
