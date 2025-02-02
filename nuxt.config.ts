@@ -16,12 +16,4 @@ export default defineNuxtConfig({
       adminPassword: "",
     },
   },
-  nitro: {
-    preset: "vercel",
-    storage: {
-      root: {
-        driver: "fs",
-      },
-    },
-  },
 });
