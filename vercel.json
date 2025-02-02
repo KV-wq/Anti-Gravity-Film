@@ -3,16 +3,10 @@
   "buildCommand": "npm run build",
   "outputDirectory": ".output",
   "public": true,
-  "functions": {
-    "server/api/**": {
-      "memory": 1024,
-      "maxDuration": 10
-    }
-  },
   "rewrites": [
     {
-      "source": "/server/data/:file*",
-      "destination": "/server/data/:file*"
+      "source": "/server/data/:file",
+      "destination": "/server/data/:file"
     }
   ]
 }
