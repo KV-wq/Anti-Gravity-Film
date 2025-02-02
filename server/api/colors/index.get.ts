@@ -1,24 +1,18 @@
-import { readFileSync } from "fs";
-import { resolve } from "path";
+import { defineEventHandler } from "h3";
+import { useStorage } from "#imports";
 
-export default defineEventHandler(async () => {
+export default defineEventHandler(async (event) => {
   try {
+    const path = `${process.cwd()}/server/data/colors.json`;
     const storage = useStorage();
-    const data = await storage.getItem("server:data/colors.json");
+    return await storage.getItem(`root:${path}`);
 
-    if (!data) {
-      throw createError({
-        statusCode: 404,
-        message: "Colors data not found",
-      });
-    }
-
-    return data;
+    // Для локальной разработки оставляем текущий подход
   } catch (error) {
-    console.error("Error reading colors:", error);
+    console.error("Error loading colors:", error);
     throw createError({
       statusCode: 500,
-      message: "Failed to load colors data",
+      message: `Failed to load colors data: ${error.message}`,
     });
   }
 });

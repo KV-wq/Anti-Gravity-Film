@@ -17,10 +17,10 @@ export default defineNuxtConfig({
     },
   },
   nitro: {
+    preset: "vercel",
     storage: {
-      server: {
+      root: {
         driver: "fs",
-        base: "./server",
       },
     },
   },
