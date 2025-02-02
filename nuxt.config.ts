@@ -16,12 +16,4 @@ export default defineNuxtConfig({
       adminPassword: "",
     },
   },
-  nitro: {
-    storage: {
-      data: {
-        driver: "fs",
-        base: "./server/data",
-      },
-    },
-  },
 });
