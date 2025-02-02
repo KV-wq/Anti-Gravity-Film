@@ -5,72 +5,64 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { useModalStore } from "~/store/modalStore";
+import { Color } from "../types/color";
+import { useCarStore } from "../store/carStore";
 
-const colors = [
-  // Эксклюзивные цвета
-  { id: "black-chrome", value: "bg-zinc-900", category: "1" },
-  { id: "silver-chrome", value: "bg-zinc-300", category: "1" },
-  { id: "gold-chrome", value: "bg-yellow-600", category: "1" },
-  { id: "rose-gold", value: "bg-pink-300", category: "1" },
-  { id: "bronze", value: "bg-amber-700", category: "1" },
-  { id: "purple-chrome", value: "bg-purple-600", category: "1" },
-  { id: "blue-chrome", value: "bg-blue-600", category: "1" },
-  { id: "green-chrome", value: "bg-green-600", category: "1" },
-  { id: "teal-chrome", value: "bg-teal-500", category: "1" },
-  { id: "red-chrome", value: "bg-red-600", category: "1" },
-  { id: "copper-chrome", value: "bg-orange-800", category: "1" },
-  { id: "platinum", value: "bg-gray-200", category: "1" },
-  { id: "titanium", value: "bg-gray-400", category: "1" },
-  { id: "pearl-white", value: "bg-slate-50", category: "1" },
-  { id: "chameleon", value: "bg-purple-400", category: "1" },
-  { id: "holographic", value: "bg-indigo-400", category: "1" },
+const carStore = useCarStore();
+const { data: colors } = await useFetch("/api/colors");
 
-  // Матовые цвета
-  { id: "matte-black", value: "bg-black", category: "2" },
-  { id: "matte-white", value: "bg-white", category: "2" },
-  { id: "matte-gray", value: "bg-gray-500", category: "2" },
-  { id: "matte-red", value: "bg-red-500", category: "2" },
-  { id: "matte-blue", value: "bg-blue-500", category: "2" },
-  { id: "matte-green", value: "bg-green-500", category: "2" },
-  { id: "matte-yellow", value: "bg-yellow-500", category: "2" },
-  { id: "matte-orange", value: "bg-orange-500", category: "2" },
-  { id: "matte-purple", value: "bg-purple-500", category: "2" },
-  { id: "matte-brown", value: "bg-amber-800", category: "2" },
-  { id: "matte-navy", value: "bg-blue-900", category: "2" },
-  { id: "matte-olive", value: "bg-olive-700", category: "2" },
-  { id: "matte-burgundy", value: "bg-red-900", category: "2" },
-  { id: "matte-silver", value: "bg-gray-300", category: "2" },
-  { id: "matte-bronze", value: "bg-amber-600", category: "2" },
-  { id: "matte-gold", value: "bg-yellow-700", category: "2" },
-  { id: "matte-pink", value: "bg-pink-500", category: "2" },
-
-  // Глянцевые цвета
-  { id: "gloss-black", value: "bg-black", category: "3" },
-  { id: "gloss-white", value: "bg-white", category: "3" },
-  { id: "gloss-silver", value: "bg-gray-200", category: "3" },
-  { id: "gloss-red", value: "bg-red-500", category: "3" },
-  { id: "gloss-blue", value: "bg-blue-500", category: "3" },
-  { id: "gloss-navy", value: "bg-blue-900", category: "3" },
-  { id: "gloss-yellow", value: "bg-yellow-400", category: "3" },
-  { id: "gloss-orange", value: "bg-orange-500", category: "3" },
-  { id: "gloss-green", value: "bg-green-500", category: "3" },
-  { id: "gloss-teal", value: "bg-teal-500", category: "3" },
-  { id: "gloss-purple", value: "bg-purple-500", category: "3" },
-  { id: "gloss-pink", value: "bg-pink-500", category: "3" },
-  { id: "gloss-brown", value: "bg-amber-800", category: "3" },
-  { id: "gloss-burgundy", value: "bg-red-900", category: "3" },
-  { id: "gloss-gold", value: "bg-yellow-600", category: "3" },
-  { id: "gloss-bronze", value: "bg-amber-600", category: "3" },
-  { id: "gloss-graphite", value: "bg-gray-700", category: "3" },
-  { id: "gloss-pearl", value: "bg-slate-50", category: "3" },
-];
-
-const selectedCategory = ref("1");
-const selectedColor = ref(colors[0].value);
-
+const selectedCategory = ref("3");
 const filteredColors = computed(() => {
-  return colors.filter((color) => color.category === selectedCategory.value);
+  return colors.value.colors.filter(
+    (color: Color) => color.category === selectedCategory.value
+  );
 });
+
+// Делаем selectedColor computed, чтобы реагировать на изменения в store
+const selectedColor = computed({
+  get: () => carStore.selectedColor,
+  set: (value) => {
+    carStore.setSelectedColor(value);
+    // Находим и устанавливаем соответствующую машину
+    const selectedColorObj = colors.value.colors.find(
+      (color: Color) => color.name === value
+    );
+    if (selectedColorObj) {
+      carStore.setSelectedCar(selectedColorObj);
+    }
+  },
+});
+
+// Инициализация начальных значений
+
+if (filteredColors.value.length > 0) {
+  selectedColor.value = filteredColors.value[0].name;
+}
+
+// Следим за изменением категории
+watch(selectedCategory, (newCategory) => {
+  const firstColorInCategory = colors.value.colors.find(
+    (color: Color) => color.category === newCategory
+  );
+
+  if (firstColorInCategory) {
+    selectedColor.value = firstColorInCategory.name;
+  }
+});
+
+// Следим за изменением selectedCar в store
+watch(
+  () => carStore.selectedCar,
+  (newCar) => {
+    if (newCar) {
+      // Обновляем категорию если нужно
+      selectedCategory.value = newCar.category;
+      // Обновляем выбранный цвет
+      carStore.setSelectedColor(newCar.name);
+    }
+  },
+  { deep: true }
+);
 
 const colorGroups = computed(() => {
   const groups = [];
@@ -103,7 +95,7 @@ const swiperOptions = {
     <h1
       class="text-[2.75vw] leading-[3.2vw] font-bold uppercase max-sm:text-2xl"
     >
-      Марка Авто Пример
+      {{ colors.title }}
     </h1>
 
     <div class="w-full h-px bg-white"></div>
@@ -114,9 +106,9 @@ const swiperOptions = {
       v-model="selectedCategory"
       class="px-4 py-5 max-sm:px-3 max-sm:py-3 w-full rounded bg-black text-white border text-lg border-white"
     >
-      <option value="1">Эксклюзивные</option>
-      <option value="2">Матовые</option>
       <option value="3">Глянцевые</option>
+      <option value="2">Матовые</option>
+      <option value="1">Эксклюзивные</option>
     </select>
 
     <div class="relative">
@@ -137,7 +129,7 @@ const swiperOptions = {
             >
               <input
                 type="radio"
-                :value="color.value"
+                :value="color.name"
                 v-model="selectedColor"
                 :name="color.id"
                 class="sr-only"
@@ -146,7 +138,7 @@ const swiperOptions = {
                 class="rounded-full size-[2.7vw] max-sm:size-10 transition-all duration-200"
                 :class="[
                   color.value,
-                  selectedColor === color.value
+                  selectedColor === color.name
                     ? 'ring-2 ring-secondary ring-offset-2 ring-offset-black'
                     : '',
                 ]"

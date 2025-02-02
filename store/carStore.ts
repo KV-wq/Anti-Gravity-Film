@@ -1,20 +1,30 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import type { Color } from "../types/color";
 
 export const useCarStore = defineStore("car", () => {
-  const selectedCar = ref({
-    id: 2,
-    image: "/images/car-2.svg",
-    code: "TPU-001S",
-    name: "Glossy Swan White (SS)",
-  });
+  const selectedCategory = ref("3");
+  const selectedColor = ref("");
+  const selectedCar = ref<Color | null>(null);
 
-  const setSelectedCar = (car: any) => {
+  const setSelectedCategory = (category: string) => {
+    selectedCategory.value = category;
+  };
+
+  const setSelectedColor = (colorName: string) => {
+    selectedColor.value = colorName;
+  };
+
+  const setSelectedCar = (car: Color) => {
     selectedCar.value = car;
   };
 
   return {
+    selectedCategory,
+    selectedColor,
     selectedCar,
+    setSelectedCategory,
+    setSelectedColor,
     setSelectedCar,
   };
 });

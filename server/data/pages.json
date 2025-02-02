@@ -1,0 +1,27 @@
+{
+  "home": {
+    "path": "/",
+    "title": "Главная",
+    "description": "Антигравийная пленка для защиты автомобиля"
+  },
+  "choose-color": {
+    "path": "/choose-color",
+    "title": "Подобрать цвет",
+    "description": "Конструктор подбора цвета пленки"
+  },
+  "products": {
+    "path": "/products",
+    "title": "Товарная линейка",
+    "description": "Каталог антигравийных пленок"
+  },
+  "video-review": {
+    "path": "/video-review",
+    "title": "Видеообзор",
+    "description": "Видеообзор наших работ"
+  },
+  "video": {
+    "path": "/video",
+    "title": "Видео",
+    "description": "Полноэкранное видео"
+  }
+}

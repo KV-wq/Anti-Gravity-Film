@@ -3,6 +3,10 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 import { Navigation, type Swiper as SwiperType } from "swiper/modules";
 import "swiper/css";
 
+const { data: productsData } = await useFetch("/api/products");
+
+const titleWords = computed(() => productsData.value?.title.split(" ") || []);
+
 const swiperModules = [Navigation];
 const isBeginning = ref(true);
 const isEnd = ref(false);
@@ -41,7 +45,7 @@ const swiperOptions = {
   <div>
     <div class="flex justify-between items-end max-sm:mb-4">
       <h1 class="font-nolimits text-[3.5vw] max-sm:text-4xl">
-        товарная <br class="sm:hidden" />линейка
+        {{ titleWords[0] }} <br class="sm:hidden" />{{ titleWords[1] }}
       </h1>
       <div class="flex gap-[2vw] -translate-y-[1vw] max-sm:hidden">
         <Arrow class="w-[5.5vw] arrow-left" :active="!isBeginning" />
@@ -56,8 +60,8 @@ const swiperOptions = {
       @swiper="onSwiper"
       @slideChange="onSlideChange"
     >
-      <SwiperSlide v-for="(item, index) in 8" :key="index">
-        <ProductCard :second="index % 2 === 1" />
+      <SwiperSlide v-for="product in productsData.products" :key="product.id">
+        <ProductCard v-bind="product" />
       </SwiperSlide>
     </Swiper>
 

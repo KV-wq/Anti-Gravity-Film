@@ -22,7 +22,8 @@ const currentPageTitle = computed(() => {
     <img
       src="../assets/images/icons/burger.svg"
       alt="menu"
-      class="w-[3.5vw] max-sm:w-11 max-[330px]:w-8 absolute max-sm:right-0"
+      class="w-[3.5vw] max-sm:w-11 max-[330px]:w-8 absolute max-sm:right-0 cursor-pointer"
+      @click="useModalStore().showMenu()"
     />
     <h2
       class="font-nolimits text-[4vw] leading-10 absolute left-1/2 sm:-translate-x-1/2 max-lg:!leading-5 max-sm:text-6xl max-[410px]:text-5xl max-sm:left-0"

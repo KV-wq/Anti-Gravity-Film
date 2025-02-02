@@ -5,11 +5,16 @@ export const useModalStore = defineStore("modal", () => {
   const isFormVisible = ref(false);
   const isContactsVisible = ref(false);
   const isVideoVisible = ref(false);
+  const isMenuVisible = ref(false);
   const selectedFilm = ref("");
 
   // Вычисляемое свойство для подложки
   const isOverlayVisible = computed(
-    () => isFormVisible.value || isContactsVisible.value || isVideoVisible.value
+    () =>
+      isFormVisible.value ||
+      isContactsVisible.value ||
+      isVideoVisible.value ||
+      isMenuVisible.value
   );
 
   // Открытие/закрытие формы
@@ -35,6 +40,7 @@ export const useModalStore = defineStore("modal", () => {
     isFormVisible.value = false;
     isContactsVisible.value = false;
     isVideoVisible.value = false;
+    isMenuVisible.value = false;
   };
 
   const setSelectedFilm = (film: string) => {
@@ -49,11 +55,20 @@ export const useModalStore = defineStore("modal", () => {
     isVideoVisible.value = false;
   };
 
+  const showMenu = () => {
+    isMenuVisible.value = true;
+  };
+
+  const hideMenu = () => {
+    isMenuVisible.value = false;
+  };
+
   return {
     isFormVisible,
     isContactsVisible,
     isOverlayVisible,
     isVideoVisible,
+    isMenuVisible,
     selectedFilm,
     showForm,
     hideForm,
@@ -63,5 +78,7 @@ export const useModalStore = defineStore("modal", () => {
     setSelectedFilm,
     showVideo,
     hideVideo,
+    showMenu,
+    hideMenu,
   };
 });

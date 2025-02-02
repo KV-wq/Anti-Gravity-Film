@@ -24,6 +24,10 @@ const store = useModalStore();
   <Transition name="fade">
     <VideoModal v-if="store.isVideoVisible" />
   </Transition>
+
+  <Transition name="slide-left">
+    <SideMenu v-if="store.isMenuVisible" />
+  </Transition>
 </template>
 
 <style scoped>
@@ -41,11 +45,24 @@ const store = useModalStore();
 /* Анимация слайда справа */
 .slide-enter-active,
 .slide-leave-active {
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease;
 }
 
 .slide-enter-from,
 .slide-leave-to {
   transform: translateX(100%);
+}
+/* Анимация слайда слева */
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: transform 0.4s ease;
+}
+
+.slide-left-enter-from,
+.slide-left-leave-to {
+  transform: translateX(-100%);
+  @media (max-width: 640px) {
+    transform: translateX(100%);
+  }
 }
 </style>

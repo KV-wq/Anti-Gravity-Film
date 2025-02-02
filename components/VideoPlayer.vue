@@ -1,11 +1,11 @@
 // components/VideoPlayer.vue
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
-
 const props = defineProps<{
   src: string;
+  small: boolean;
 }>();
 
+const router = useRouter();
 const videoRef = ref<HTMLVideoElement | null>(null);
 const progressRef = ref<HTMLDivElement | null>(null);
 const isPlaying = ref(true);
@@ -30,6 +30,10 @@ const toggleMute = () => {
 
   videoRef.value.muted = !videoRef.value.muted;
   isMuted.value = videoRef.value.muted;
+};
+
+const handleExpand = () => {
+  router.push("/video");
 };
 
 const formatTime = (seconds: number): string => {
@@ -79,7 +83,10 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="relative w-screen h-screen bg-black">
+  <div
+    class="relative w-screen h-screen bg-black"
+    :class="{ '!h-auto': small }"
+  >
     <!-- Видео -->
     <video
       ref="videoRef"
@@ -171,6 +178,26 @@ onUnmounted(() => {
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
             <line x1="23" y1="9" x2="17" y2="15" />
             <line x1="17" y1="9" x2="23" y2="15" />
+          </svg>
+        </button>
+
+        <!-- Кнопка расширения (показывается только если small=true) -->
+        <button v-if="small" @click="handleExpand" class="text-white">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M15 3h6v6" />
+            <path d="M9 21H3v-6" />
+            <path d="M21 3l-7 7" />
+            <path d="M3 21l7-7" />
           </svg>
         </button>
       </div>

@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { data: pageData } = await useFetch("/api/video-review");
+</script>
 
 <template>
   <div>
@@ -10,18 +12,16 @@
         <h1
           class="uppercase font-nolimits text-[3.7vw] max-sm:text-4xl max-sm:mb-3"
         >
-          видеообзор
+          {{ pageData.title }}
         </h1>
         <p class="text-[1.1vw] max-sm:text-sm max-sm:leading-5">
-          Это тестовый контент который не должен нести никакого смысла, лишь
-          показать текст. Это тестовый контент который не должен нести никакого
-          смысла, лишь показать текст.
+          {{ pageData.description }}
         </p>
       </div>
       <div
         class="relative flex justify-center items-center w-[52vw] overflow-hidden h-[30vw] max-sm:w-full max-sm:h-[47vw]"
       >
-        <VideoPlayer src="/video/main.mp4" class="absolute inset-0" />
+        <VideoPlayer :src="pageData.videoSrc" class="absolute inset-0" small />
       </div>
     </div>
   </div>

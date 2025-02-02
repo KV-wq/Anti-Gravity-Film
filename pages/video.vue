@@ -1,8 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { data: pageData } = await useFetch("/api/video-review");
+</script>
 
 <template>
   <div>
-    <NuxtLink href="/">
+    <NuxtLink href="/video-review">
       <div
         class="flex items-center gap-3 absolute z-20 left-5 top-7 md:left-[5vw] md:top-[2vw]"
       >
@@ -18,6 +20,6 @@
         </p>
       </div>
     </NuxtLink>
-    <VideoPlayer src="/video/main.mp4" />
+    <VideoPlayer :src="pageData.videoSrc" :small="false" />
   </div>
 </template>

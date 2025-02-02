@@ -1,7 +1,20 @@
 <script setup lang="ts">
 import { useCarStore } from "~/store/carStore";
+import { computed } from "vue";
 
+const { data } = await useFetch("/api/colors");
 const carStore = useCarStore();
+
+// Получаем полный объект цвета на основе выбранного имени
+const selectedColorData = computed(() => {
+  if (!data.value?.colors || !carStore.selectedColor) {
+    return data.value?.colors[0]; // Возвращаем первый цвет как дефолтный
+  }
+
+  return data.value.colors.find(
+    (color) => color.name === carStore.selectedColor
+  );
+});
 </script>
 
 <template>
@@ -13,8 +26,8 @@ const carStore = useCarStore();
     >
       <TransitionGroup name="car-rotate">
         <img
-          :key="carStore.selectedCar.image"
-          :src="carStore.selectedCar.image"
+          :key="selectedColorData?.carImage"
+          :src="selectedColorData?.carImage"
           alt="Car"
           class="w-full h-full object-contain"
         />
@@ -22,21 +35,24 @@ const carStore = useCarStore();
     </div>
 
     <p
-      class="absolute top-[7.5vw] -left-[6.4vw] text-black z-10 font-semibold w-[10vw] text-[0.8vw] max-sm:text-xs max-sm:w-24 max-sm:-left-12 max-sm:top-4"
+      class="absolute top-[7.5vw] -left-[6.4vw] text-black z-20 font-semibold w-[10vw] text-[0.8vw] max-sm:text-xs max-sm:w-24 max-sm:-left-12 max-sm:top-4"
     >
-      {{ carStore.selectedCar.code }} {{ carStore.selectedCar.name }}
+      {{ selectedColorData?.code }} <br />
+      {{ selectedColorData?.name }}
     </p>
 
-    <div class="absolute top-[3vw] -left-[7vw] max-sm:-left-16 max-sm:top-0">
+    <div
+      class="absolute top-[3vw] -left-[7vw] max-sm:-left-16 max-sm:top-0 z-10"
+    >
       <img
-        src="../assets/images/test/metal.svg"
+        :src="selectedColorData?.cardImage"
         alt="color"
-        class="w-[10.5vw] max-sm:w-28"
+        class="w-[10.5vw] max-sm:w-28 rounded-xl h-[7.5vw] max-sm:h-[72px]"
       />
       <img
         src="../assets/images/icons/lines.svg"
         alt="lines"
-        class="ml-7 mt-2 h-[7vw] max-sm:h-12 max-sm:ml-2"
+        class="ml-7 mt-2 h-[6.7vw] max-sm:h-12 max-sm:ml-2"
       />
     </div>
 
@@ -55,24 +71,14 @@ const carStore = useCarStore();
   transform-origin: center center;
 }
 
-/* .car-rotate-enter-from {
-  opacity: 0;
-  transform: translate(30%, -30%) rotate(-10deg);
-}
-
-.car-rotate-leave-to {
-  opacity: 0;
-  transform: translate(-30%, 30%) rotate(10deg);
-} */
-
 .car-rotate-enter-from {
   opacity: 0;
-  transform: translateY(-30%);
+  transform: translateX(30%);
 }
 
 .car-rotate-leave-to {
   opacity: 0;
-  transform: translateY(20%);
+  transform: translateX(-40%);
 }
 
 .car-rotate-enter-to,

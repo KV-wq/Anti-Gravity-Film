@@ -1,0 +1,12 @@
+{
+  "phone": "+7 (000) 000 00 00",
+  "email": "mail1234567@mail.ru",
+  "address": "г. Москва, пример адреса, ул. Ленина, 15",
+  "social": {
+    "instagram": "#",
+    "vk": "#",
+    "facebook": "#",
+    "youtube": "#",
+    "viber": "#"
+  }
+}

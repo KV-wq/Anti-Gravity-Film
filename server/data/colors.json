@@ -1,0 +1,50 @@
+{
+  "colors": [
+    {
+      "id": "1",
+      "name": "Silver Chrome",
+      "code": "TPU-001S",
+      "value": "bg-zinc-300",
+      "category": "2",
+      "carImage": "/images/1738420282604-TPU-003S.png",
+      "cardImage": "/images/1738420287549-TPU-003S (1).JPG"
+    },
+    {
+      "id": "2",
+      "name": "Белый",
+      "code": "TPU-101F",
+      "value": "bg-white",
+      "category": "2",
+      "carImage": "/images/1738421903274-TPU-001S (1).png",
+      "cardImage": "/images/1738421908637-TPU-001S (1).JPG"
+    },
+    {
+      "id": "241",
+      "name": "Белый2",
+      "code": "TPU-101F",
+      "value": "bg-white",
+      "category": "2",
+      "carImage": "/images/1738421903274-TPU-001S (1).png",
+      "cardImage": "/images/1738421908637-TPU-001S (1).JPG"
+    },
+    {
+      "id": "3",
+      "name": "black",
+      "code": "TPU-002S",
+      "value": "bg-red-500",
+      "category": "3",
+      "carImage": "/images/1738422289404-TPU-002S.png",
+      "cardImage": "/images/1738422298149-TPU-002S.JPG"
+    },
+    {
+      "id": "test",
+      "name": "test",
+      "code": "TPU-321S",
+      "value": "bg-blue-600",
+      "category": "1",
+      "carImage": "/images/1738422343541-TPU-001S.png",
+      "cardImage": "/images/1738422353983-Скриншот 31-01-2025 184354.jpg"
+    }
+  ],
+  "title": "марка авто пример"
+}
