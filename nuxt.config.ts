@@ -14,6 +14,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       adminPassword: "",
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || "/",
     },
   },
 });

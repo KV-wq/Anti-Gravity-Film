@@ -1,23 +1,24 @@
 <script setup lang="ts">
 import { useCarStore } from "~/store/carStore";
-import { computed } from "vue";
 import type { Color } from "../types/color";
 
 const { data } = await useFetch("/api/colors");
 const carStore = useCarStore();
 
-// Находим полный объект цвета на основе selectedColor из store
-const selectedColorObject = computed(() => {
-  if (!data.value?.colors || !carStore.selectedColor) return null;
+// Получаем все машины выбранной категории
+const categoryColors = computed(() => {
+  if (!data.value?.colors) return [];
 
-  return data.value.colors.find(
+  // Находим объект выбранного цвета
+  const selectedColor = data.value.colors.find(
     (color) => color.name === carStore.selectedColor
   );
-});
 
-// Получаем категорию выбранного цвета
-const currentCategory = computed(() => {
-  return selectedColorObject.value?.category || "3";
+  // Получаем его категорию или используем дефолтную
+  const category = selectedColor?.category || "3";
+
+  // Возвращаем все цвета этой категории
+  return data.value.colors.filter((color) => color.category === category);
 });
 
 const positions = [
@@ -38,31 +39,47 @@ const positions = [
   },
 ];
 
-// Создаем слоты с машинами той же категории, что и выбранный цвет
-const carSlots = computed(() => {
-  if (!data.value?.colors) return [];
-
-  // Получаем все цвета той же категории
-  const categoryColors = data.value.colors.filter(
-    (color) => color.category === currentCategory.value
+// Определяем какие три машины показывать
+const displayedCars = computed(() => {
+  const colors = categoryColors.value;
+  const selectedIndex = colors.findIndex(
+    (color) => color.name === carStore.selectedColor
   );
 
-  // Распределяем по позициям
-  return positions.map((position, index) => {
-    const car = categoryColors[index] || null;
-    return {
-      ...position,
-      car,
-    };
-  });
+  if (selectedIndex === -1) {
+    // Если ничего не выбрано, показываем первые три
+    return colors.slice(0, 3);
+  }
+
+  if (selectedIndex === 0) {
+    // Если выбрана первая, показываем первые три
+    return colors.slice(0, 3);
+  }
+
+  if (selectedIndex === colors.length - 1) {
+    // Если выбрана последняя, показываем последние три
+    return colors.slice(-3);
+  }
+
+  // В остальных случаях показываем выбранную в центре
+  return [
+    colors[selectedIndex - 1],
+    colors[selectedIndex],
+    colors[selectedIndex + 1],
+  ];
 });
 
-// При выборе машины обновляем store
-const handleColorSelect = (car: Color) => {
-  if (car) {
-    carStore.setSelectedCar(car);
-    carStore.setSelectedColor(car.name);
-  }
+// Привязываем машины к позициям
+const carSlots = computed(() => {
+  return positions.map((position, index) => ({
+    ...position,
+    car: displayedCars.value[index] || null,
+  }));
+});
+
+const handleClick = (car: Color) => {
+  carStore.setSelectedColor(car.name);
+  carStore.setSelectedCar(car);
 };
 </script>
 
@@ -81,10 +98,9 @@ const handleColorSelect = (car: Color) => {
         <label v-if="slot.car" class="cursor-pointer">
           <input
             type="radio"
-            :value="slot.car.name"
+            :name="'car-selector'"
             :checked="slot.car.name === carStore.selectedColor"
-            @change="handleColorSelect(slot.car)"
-            :name="'car-' + slot.car.id"
+            @click="handleClick(slot.car)"
             class="sr-only"
           />
           <img
@@ -93,7 +109,6 @@ const handleColorSelect = (car: Color) => {
             class="size-full mt-[0.2vw] max-md:mt-2"
           />
         </label>
-        <!-- Пустой белый круг, если нет машины в этой позиции -->
         <div v-else class="size-[5.2vw] max-sm:size-16"></div>
       </div>
       <div
@@ -107,10 +122,3 @@ const handleColorSelect = (car: Color) => {
     </div>
   </div>
 </template>
-
-<style scoped>
-input:focus-visible + img {
-  outline: 2px solid #4caf50;
-  outline-offset: 2px;
-}
-</style>
