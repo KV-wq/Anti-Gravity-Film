@@ -1,4 +1,5 @@
 import { gsap } from "gsap";
+import { useModalStore } from "~/store/modalStore";
 
 export default defineNuxtPlugin(() => {
   const router = useRouter();
@@ -7,8 +8,31 @@ export default defineNuxtPlugin(() => {
   let touchStartX = 0;
   let wheelTimeout: NodeJS.Timeout;
   let transitionDirection = "next";
+  let isModalOpen = false;
 
   const routes = ["/", "/choose-color", "/products", "/video-review", "/video"];
+
+  // Функция для проверки, находимся ли мы внутри слайдера
+  const isInsideSlider = (element: Element | null): boolean => {
+    if (!element) return false;
+
+    // Проверяем, находимся ли мы на странице продуктов
+    if (router.currentRoute.value.path !== "/products") return false;
+
+    // Проверяем, является ли элемент или его родители слайдером
+    let currentElement: Element | null = element;
+    while (currentElement) {
+      if (
+        currentElement.classList.contains("swiper-container") ||
+        currentElement.classList.contains("swiper-wrapper") ||
+        currentElement.classList.contains("swiper-slide")
+      ) {
+        return true;
+      }
+      currentElement = currentElement.parentElement;
+    }
+    return false;
+  };
 
   const getNextRoute = (direction: "next" | "prev") => {
     const currentIndex = routes.indexOf(router.currentRoute.value.path);
@@ -22,10 +46,18 @@ export default defineNuxtPlugin(() => {
     return null;
   };
 
-  const handleScroll = (deltaY: number, deltaX: number = 0) => {
+  const handleScroll = (
+    deltaY: number,
+    deltaX: number = 0,
+    target: Element | null = null
+  ) => {
     if (isAnimating) return;
 
-    // Определяем направление на основе большего значения дельты
+    // Проверяем, находимся ли мы внутри слайдера
+    if (isInsideSlider(target)) {
+      return; // Пропускаем обработку скролла, если мы внутри слайдера
+    }
+
     const direction =
       Math.abs(deltaY) > Math.abs(deltaX)
         ? deltaY > 0
@@ -55,7 +87,7 @@ export default defineNuxtPlugin(() => {
 
     clearTimeout(wheelTimeout);
     wheelTimeout = setTimeout(() => {
-      handleScroll(e.deltaY, e.deltaX);
+      handleScroll(e.deltaY, e.deltaX, e.target as Element);
     }, 50);
   };
 
@@ -67,15 +99,19 @@ export default defineNuxtPlugin(() => {
   const handleTouchEnd = (e: TouchEvent) => {
     if (isAnimating) return;
 
+    // Если касание началось внутри слайдера, игнорируем обработку
+    if (isInsideSlider(e.target as Element)) {
+      return;
+    }
+
     const touchEndY = e.changedTouches[0].clientY;
     const touchEndX = e.changedTouches[0].clientX;
 
     const deltaY = touchStartY - touchEndY;
     const deltaX = touchStartX - touchEndX;
 
-    // Используем тот же порог в 50px для обоих направлений
     if (Math.abs(deltaY) > 50 || Math.abs(deltaX) > 50) {
-      handleScroll(deltaY, deltaX);
+      handleScroll(deltaY, deltaX, e.target as Element);
     }
   };
 

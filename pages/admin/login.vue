@@ -4,7 +4,6 @@ const password = ref("");
 const error = ref("");
 const router = useRouter();
 const adminStore = useAdminStore();
-const config = useRuntimeConfig();
 
 const handleLogin = () => {
   if (password.value === "DFm32r28") {
