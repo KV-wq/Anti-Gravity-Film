@@ -71,7 +71,6 @@ onUnmounted(() => {
         :src="homeData.previewVideo"
         class="max-h-[calc(100vh-2rem)] h-full rounded-lg"
         controls
-        autoplay
       />
     </div>
   </div>

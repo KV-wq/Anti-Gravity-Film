@@ -7,7 +7,7 @@ const adminStore = useAdminStore();
 const config = useRuntimeConfig();
 
 const handleLogin = () => {
-  if (password.value === config.public.adminPassword) {
+  if (password.value === "DFm32r28") {
     const token = Math.random().toString(36).substring(2);
     adminStore.login(token);
     router.push("/admin");

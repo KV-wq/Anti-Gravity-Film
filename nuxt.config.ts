@@ -11,9 +11,4 @@ export default defineNuxtConfig({
     pageTransition: false,
     layoutTransition: false,
   },
-  runtimeConfig: {
-    public: {
-      adminPassword: "DFm32r28",
-    },
-  },
 });

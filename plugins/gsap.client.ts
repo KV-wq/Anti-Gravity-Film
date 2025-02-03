@@ -1,5 +1,4 @@
 import { gsap } from "gsap";
-import { useModalStore } from "~/store/modalStore";
 
 export default defineNuxtPlugin(() => {
   const router = useRouter();
@@ -8,7 +7,6 @@ export default defineNuxtPlugin(() => {
   let touchStartX = 0;
   let wheelTimeout: NodeJS.Timeout;
   let transitionDirection = "next";
-  let isModalOpen = false;
 
   const routes = ["/", "/choose-color", "/products", "/video-review", "/video"];
 

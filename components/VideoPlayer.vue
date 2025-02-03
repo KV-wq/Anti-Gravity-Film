@@ -8,7 +8,7 @@ const props = defineProps<{
 const router = useRouter();
 const videoRef = ref<HTMLVideoElement | null>(null);
 const progressRef = ref<HTMLDivElement | null>(null);
-const isPlaying = ref(true);
+const isPlaying = ref(false);
 const isMuted = ref(false);
 const currentTime = ref("0:00");
 const isDragging = ref(false);
@@ -91,7 +91,6 @@ onUnmounted(() => {
     <video
       ref="videoRef"
       :src="src"
-      autoplay
       class="w-full h-full object-contain"
       @click="togglePlay"
     />
