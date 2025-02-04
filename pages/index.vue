@@ -42,6 +42,25 @@ const onSlideChange = () => {
 
 <template>
   <div class="relative min-h-screen w-full bg-black">
+    <Swiper
+      :modules="[Navigation]"
+      @swiper="onSwiper"
+      @slideChange="onSlideChange"
+      :slides-per-view="1"
+      :mousewheel="false"
+      :speed="700"
+      :space-between="0"
+      class="sm:pointer-events-none !absolute left-0 max-sm:w-full w-7/12 h-screen max-sm:h-[40vh] !z-0"
+    >
+      <SwiperSlide v-for="(slide, index) in slides" :key="index">
+        <img
+          :src="slide.image"
+          :alt="'Car ' + (index + 1)"
+          class="w-full h-full object-cover object-left"
+        />
+      </SwiperSlide>
+    </Swiper>
+
     <NuxtLink href="/choose-color">
       <Button
         is-vertical
@@ -62,24 +81,6 @@ const onSlideChange = () => {
       alt="menu"
       class="absolute top-20 sm:left-20 w-[4vw] max-sm:right-5 max-sm:top-5 max-sm:w-11 max-[350px]:w-8 max-lg:top-[3.75rem] cursor-pointer"
     />
-
-    <Swiper
-      :modules="[Navigation]"
-      @swiper="onSwiper"
-      @slideChange="onSlideChange"
-      :slides-per-view="1"
-      :mousewheel="false"
-      :speed="700"
-      class="absolute sm:pointer-events-none !overflow-visible max-sm:w-full max-sm:right-0 max-[440px]:top-44 max-sm:top-36 z-10 w-[48vw] sm:left-1/2 sm:-translate-x-[60vw] top-1/2 sm:translate-y-[30vh] max-md:w-7/12"
-    >
-      <SwiperSlide v-for="(slide, index) in slides" :key="index">
-        <img
-          :src="slide.image"
-          :alt="'Car ' + (index + 1)"
-          class="w-full h-full object-contain"
-        />
-      </SwiperSlide>
-    </Swiper>
 
     <div
       class="w-5/12 flex flex-col justify-between pb-[3.5vw] max-sm:pb-[4vw] absolute pl-[4.7vw] pt-[3.5vw] pr-[3vw] max-sm:pr-0 max-sm:pl-[7vw] max-sm:pt-[3.75rem] right-0 bottom-0 h-screen bg-gradient-to-t from-primary_light to-primary_dark max-sm:w-full max-sm:h-[60%]"
@@ -154,11 +155,11 @@ const onSlideChange = () => {
 
 <style scoped>
 :deep(.swiper-slide) {
-  opacity: 0;
-  transition: opacity ease-out 0.2s;
+  opacity: 0.2;
+  transition: opacity ease-out 1s;
 }
 
 :deep(.swiper-slide-active) {
-  opacity: 1;
+  opacity: 0.7;
 }
 </style>
