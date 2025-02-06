@@ -69,11 +69,10 @@ const onSlideChange = () => {
       >
     </NuxtLink>
 
-    <h2
-      class="absolute font-nolimits max-sm:text-5xl max-sm:left-5 sm:top-10 max-sm:top-[5.5px] text-[5vw] left-[20vw]"
-    >
-      логотип
-    </h2>
+    <img
+      :src="homeData.logoImage"
+      class="absolute max-sm:left-[30vw] sm:top-9 max-sm:top-2 left-[25vw] h-[9vw] max-sm:h-20 w-auto"
+    />
 
     <img
       @click="useModalStore().showMenu()"

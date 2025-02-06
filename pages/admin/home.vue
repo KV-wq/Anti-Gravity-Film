@@ -21,6 +21,35 @@
       <h1 class="text-2xl font-bold mb-6">Редактирование главной страницы</h1>
 
       <div v-if="data" class="space-y-6">
+        <!-- Логотип -->
+        <div class="bg-white p-6 rounded-lg shadow">
+          <h2 class="text-xl font-semibold mb-4">Логотип</h2>
+          <div class="space-y-4">
+            <div class="w-40 h-40 bg-gray-100 rounded-lg overflow-hidden">
+              <img
+                :src="data.logoImage"
+                alt="Логотип"
+                class="w-full h-full object-contain"
+              />
+            </div>
+            <div class="flex items-center gap-4">
+              <input
+                type="file"
+                ref="logoFileRef"
+                class="hidden"
+                accept="image/*"
+                @change="handleLogoChange"
+              />
+              <button
+                @click="logoFileRef?.click()"
+                class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Заменить логотип
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- Текстовый контент -->
         <div class="bg-white p-6 rounded-lg shadow">
           <h2 class="text-xl font-semibold mb-4">Текстовый контент</h2>
@@ -86,7 +115,6 @@
               </div>
             </div>
 
-            <!-- Кнопка добавления нового слайда -->
             <div
               v-if="data.slider.length < 5"
               class="aspect-video bg-gray-100 rounded-lg flex items-center justify-center cursor-pointer hover:bg-gray-200"
@@ -97,9 +125,9 @@
           </div>
         </div>
 
+        <!-- Видео превью -->
         <div class="bg-white p-6 rounded-lg shadow mt-6">
           <h2 class="text-xl font-semibold mb-4">Видео превью</h2>
-
           <div class="space-y-4">
             <div class="aspect-video bg-gray-100 rounded-lg overflow-hidden">
               <video
@@ -108,7 +136,6 @@
                 class="w-full h-full object-contain"
               ></video>
             </div>
-
             <div class="flex items-center gap-4">
               <input
                 type="file"
@@ -127,7 +154,6 @@
                 Загрузка: {{ uploadProgress }}%
               </p>
             </div>
-
             <p class="text-sm text-gray-500">
               Поддерживаемые форматы: MP4, MOV, WEBM. Максимальный размер: 100MB
             </p>
@@ -160,53 +186,12 @@ interface HomeData {
     image: string;
   }[];
   previewVideo: string;
+  logoImage: string;
 }
 
+const logoFileRef = ref<HTMLInputElement | null>(null);
 const videoFileRef = ref<HTMLInputElement | null>(null);
 const uploadProgress = ref<number>(0);
-
-const handleVideoChange = async (event: Event) => {
-  const input = event.target as HTMLInputElement;
-  if (!input.files?.length) return;
-
-  const file = input.files[0];
-
-  // Проверка размера файла (100MB)
-  if (file.size > 100 * 1024 * 1024) {
-    alert("Файл слишком большой. Максимальный размер: 100MB");
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("file", file);
-
-  try {
-    uploadProgress.value = 0;
-
-    const response = await fetch("/api/upload-video", {
-      method: "POST",
-      body: formData,
-    });
-
-    const result = await response.json();
-
-    if (result.success && data.value) {
-      data.value.previewVideo = result.path;
-      uploadProgress.value = 100;
-
-      // Сбрасываем прогресс через 2 секунды
-      setTimeout(() => {
-        uploadProgress.value = 0;
-      }, 2000);
-    } else {
-      alert(result.error || "Ошибка при загрузке видео");
-    }
-  } catch (error) {
-    alert("Ошибка при загрузке видео");
-    console.error(error);
-  }
-};
-
 const data = ref<HomeData | null>(null);
 const fileRefs = ref<HTMLInputElement[]>([]);
 
@@ -219,6 +204,70 @@ onMounted(async () => {
 onUnmounted(() => {
   document.body.style.overflow = "hidden";
 });
+
+const handleLogoChange = async (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  if (!input.files?.length) return;
+
+  const formData = new FormData();
+  formData.append("file", input.files[0]);
+
+  try {
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    if (result.success && data.value) {
+      data.value.logoImage = result.path;
+    } else {
+      alert(result.error || "Ошибка при загрузке логотипа");
+    }
+  } catch (error) {
+    alert("Ошибка при загрузке логотипа");
+    console.error(error);
+  }
+};
+
+const handleVideoChange = async (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  if (!input.files?.length) return;
+
+  const file = input.files[0];
+
+  if (file.size > 100 * 1024 * 1024) {
+    alert("Файл слишком большой. Максимальный размер: 100MB");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    uploadProgress.value = 0;
+    const response = await fetch("/api/upload-video", {
+      method: "POST",
+      body: formData,
+    });
+
+    const result = await response.json();
+
+    if (result.success && data.value) {
+      data.value.previewVideo = result.path;
+      uploadProgress.value = 100;
+      setTimeout(() => {
+        uploadProgress.value = 0;
+      }, 2000);
+    } else {
+      alert(result.error || "Ошибка при загрузке видео");
+    }
+  } catch (error) {
+    alert("Ошибка при загрузке видео");
+    console.error(error);
+  }
+};
 
 const handleFileChange = async (event: Event, index: number) => {
   const input = event.target as HTMLInputElement;

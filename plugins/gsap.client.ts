@@ -16,6 +16,8 @@ export default defineNuxtPlugin(() => {
   const isInsideSlider = (element: Element | null): boolean => {
     if (!element) return false;
 
+    if (router.currentRoute.value.path.startsWith("/admin")) return true;
+
     // Проверяем, находимся ли мы на странице продуктов
     if (router.currentRoute.value.path !== "/products") return false;
 

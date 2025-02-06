@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useModalStore } from "~/store/modalStore";
+const { data: homeData } = await useFetch("/api/home");
 
 const route = useRoute();
 
@@ -26,11 +27,10 @@ const currentPageTitle = computed(() => {
       @click="useModalStore().showMenu()"
     />
     <NuxtLink href="/">
-      <h2
-        class="font-nolimits cursor-pointer active:scale-95 transition-transform text-[4vw] leading-10 absolute left-1/2 sm:-translate-x-1/2 max-lg:!leading-5 max-sm:text-6xl max-[410px]:text-5xl max-sm:left-0"
-      >
-        логотип
-      </h2>
+      <img
+        :src="homeData.logoImage"
+        class="cursor-pointer active:scale-95 transition-transform h-[7vw] sm:-translate-y-[1.5vw] absolute left-1/2 sm:-translate-x-1/2 -translate-y-2 max-sm:h-14 w-auto max-sm:left-0"
+      />
     </NuxtLink>
     <Button
       @click="useModalStore().showContacts()"
@@ -38,7 +38,7 @@ const currentPageTitle = computed(() => {
       >контакты</Button
     >
     <p
-      class="text-[1.2vw] top-[4.5vw] absolute tracking-wide max-sm:text-base max-sm:top-12"
+      class="text-[1.2vw] top-[4.5vw] absolute tracking-wide max-sm:text-base max-sm:top-14"
     >
       <span class="underline text-secondary"
         ><NuxtLink href="/">Главная</NuxtLink></span
